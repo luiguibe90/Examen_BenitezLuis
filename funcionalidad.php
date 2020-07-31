@@ -4,21 +4,22 @@ $NOMBRE = "";
 $URL_PRINCIPAL = "";
 $DESCRIPCION = "";
 $accion = "Agregar";
+$accionm = "Modificar";
 
 if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
-    insert($_POST["COD_MODULO"], $_POST["NOMBRE"], $_POST["ESTADO"]);
+    insert($_POST["NOMBRE"], $_POST["URL_PRICIPAL"], $_POST["DESCRIPCION"]);
 } else if (isset($_POST["accion"]) && ($_POST["accion"] == "Modificar")) {
-    update($_POST["COD_MODULO"], $_POST["NOMBRE"], $_POST["ESTADO"]);
+    update($_POST["NOMBRE"], $_POST["URL_PRINCIPAL"], $_POST["DESCRIPCION"]);
 } else if (isset($_GET["update"])) {
-    $MODULO = findByPK($_GET["update"]);
-    if ($MODULO != null) {
-        $COD_MODULO = $MODULO["COD_MODULO"];
-        $NOMBRE = $MODULO["NOMBRE"];
-        $ESTADO = $MODULO["ESTADO"];       
+    $FUNCIONALIDAD = findByPK($_GET["update"]);
+    if ($FUNCIONALIDAD != null) {
+        $NOMBRE = $FUNCIONALIDAD["NOMBRE"];
+        $URL_PRINCIPAL = $FUNCIONALIDAD["URL_PRINCIPAL"];
+        $DESCRIPCION = $FUNCIONALIDAD["DESCRIPCION"];       
         $accion = "Modificar";
     }
-} else if (isset($_POST["elimModulo"])) {
-    delete($_POST["elimModulo"]);
+} else if (isset($_POST["elimFuncionalidad"])) {
+    delete($_POST["elimFuncionalidad"]);
 }
 ?>
 
@@ -93,7 +94,7 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
                                         <table>
                                             <tr>
                                                 <td scope="col" style="width: 1010px;">&nbsp;</td>
-                                                <th><input type="button" name="eliminar" class=" btn btn-light btn-round px-4 " value="Eliminar" onclick="eliminarModulo();"></th>
+                                               
                                             </tr>
                                         </table>
                                     </div>
@@ -104,7 +105,7 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
                                                     <th scope="col" style="text-align: center;">Nombre</th>
                                                     <th scope="col" style="text-align: center;">Url Principal </th>
                                                     <th scope="col" style="text-align: center;">Descripcion</th>
-                                                    <!-- <th scope="col" style="text-align: center;">ELIM.</th> -->
+                                                
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -114,17 +115,18 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
                                                     while ($row = $result->fetch_assoc()) {
                                                 ?>
                                                         <tr>
-                                                            <th scope="col" style="text-align: center;"><a href="funcionalidad.php?update=<?php echo $row["COD_MODULO"]; ?>"><?php echo $row["COD_MODULO"]; ?></a></th>
-                                                            <th scope="col" style="text-align: center;"><?php echo $row["NOMBRE"]; ?></th>
-                                                            <th scope="col" style="text-align: center;"><?php echo $row["ESTADO"]; ?></th>
-                                                            <!-- <th scope="col" style="text-align: center;"><input type="radio" name="elimModulo" value="<?php echo $row["COD_MODULO"]; ?>"></th> -->
+                                                            <th scope="col" style="text-align: center;"><a href="funcionalidad.php?update=<?php echo $row["NOMBRE"]; ?>"><?php echo $row["NOMBRE"]; ?></a></th>
+                                                            <!-- <th scope="col" style="text-align: center;"><?php echo $row["NOMBRE"]; ?></th> -->
+                                                            <th scope="col" style="text-align: center;"><?php echo $row["URL_PRINCIPAL"]; ?></th>
+                                                            <th scope="col" style="text-align: center;"><?php echo $row["DESCRIPCION"]; ?></th>
+                                                          
                                                         </tr>
                                                     <?php
                                                     }
                                                 } else {
                                                     ?>
                                                     <tr>
-                                                        <th scope="col">No hay Modulos Registrados</th>
+                                                        <th scope="col">No hay Funcionalidades Registradas</th>
                                                     </tr>
                                                 <?php  } ?>
                                             </tbody>
@@ -146,10 +148,7 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
                         <div class="card">
                             <div class="card-body">
                                 <input type="hidden" name="COD_MODULO" value="<?php echo $COD_MODULO; ?>" />
-                                <tr>
-                                            <td><input type="submit" class=" btn btn-light btn-round px-5 " name="accion" value="Nuevo" />
-                                            <td><input type="submit" class=" btn btn-light btn-round px-5 " name="accion" value="Modificar" />
-                                            <td><input type="submit" class=" btn btn-light btn-round px-5 " name="accion" value="Eliminar" />
+                                                                   
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <tr>
@@ -167,8 +166,9 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
                     
                                         <tr>
                                             <td><input type="submit" class=" btn btn-light btn-round px-5 " name="accion" value="<?php echo $accion; ?>" /></td>
+                                            <td><input type="submit" class=" btn btn-light btn-round px-5 " name="accion" value="<?php echo $accionm; ?>" /></td>
+                                        <td><input type="button" name="eliminar" class=" btn btn-light btn-round px-4 " value="Eliminar" onclick="eliminarFuncionalidad();"></td>
                                         </tr>
-
                                     </table>
                                     </form>
                                 </div>
@@ -188,7 +188,7 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
     </footer> -->
 </body>
 <script>
-    function eliminarModulo() {
+    function eliminarFuncionalidad() {
         document.getElementById('forma').submit();
     }
 </script>
