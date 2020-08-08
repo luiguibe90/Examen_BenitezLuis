@@ -144,7 +144,7 @@ if (isset($_POST["accion"]) && ($_POST["accion"] == "Agregar")) {
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row mt-3">
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="card">
                             <div class="card-body">
                                 <input type="hidden" name="COD_MODULO" value="<?php echo $COD_MODULO; ?>" />
